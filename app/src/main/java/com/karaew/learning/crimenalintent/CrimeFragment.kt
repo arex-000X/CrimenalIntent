@@ -39,10 +39,6 @@ class CrimeFragment : Fragment() {
             isEnabled = false
         }
 
-
-
-
-
         return view
     }
 
