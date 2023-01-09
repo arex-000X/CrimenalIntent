@@ -1,15 +1,30 @@
 package com.karaew.learning.crimenalintent
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class CrimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CrimeViewHolder(view: View) : RecyclerView.ViewHolder(view),View.OnClickListener {
 
-    val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
-    val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+    private lateinit var crime: Crime
+    private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
+    private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+    init {
+        itemView.setOnClickListener { this }
+    }
+    fun bind(crime: Crime) {
+        this.crime = crime
+        titleTextView.text = this.crime.title
+        dateTextView.text = this.crime.date.toString()
+    }
+
+    override fun onClick(v: View?) {
+      // Toast.makeText(context,"${crime.title} pressed",Toast.LENGTH_SHORT)
+    }
 }
 
 class CrimeAdapter(var crimes: List<Crime>) : RecyclerView.Adapter<CrimeViewHolder>() {
@@ -22,10 +37,7 @@ class CrimeAdapter(var crimes: List<Crime>) : RecyclerView.Adapter<CrimeViewHold
 
     override fun onBindViewHolder(holder: CrimeViewHolder, position: Int) {
         val crime = crimes[position]
-        holder.apply {
-            titleTextView.text = crime.title
-            dateTextView.text = crime.date.toString()
-        }
+        holder.bind(crime)
     }
 
     override fun getItemCount() = crimes.size
