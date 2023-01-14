@@ -19,7 +19,6 @@ class CrimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         titleTextView.text = this.crime.title
         dateTextView.text = this.crime.date.toString()
     }
-
     init {
         itemView.setOnClickListener {
             Toast.makeText(it.context, "Pressed ${crime.title}", Toast.LENGTH_SHORT).show()
