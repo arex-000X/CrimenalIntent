@@ -1,12 +1,16 @@
 package com.karaew.learning.crimenalintent
 
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.karaew.learning.crimenalintent.database.Crime
+import java.text.DateFormat
+
 
 class CrimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -17,7 +21,7 @@ class CrimeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(crime: Crime) {
         this.crime = crime
         titleTextView.text = this.crime.title
-        dateTextView.text = this.crime.date.toString()
+        dateTextView.text = DateFormat.getDateInstance().format(this.crime.date)
     }
     init {
         itemView.setOnClickListener {
@@ -54,11 +58,8 @@ class CrimeAdapter(var crimes: List<Crime>) : RecyclerView.Adapter<CrimeViewHold
     }
 
     override fun getItemCount() = crimes.size
-    override fun getItemViewType(position: Int): Int {
-        return when (crimes[position].requarePolice) {
-            true -> 1
-            else -> 2
-        }
-    }
+   override fun getItemViewType(position: Int): Int {
+       return 1
 
+   }
 }

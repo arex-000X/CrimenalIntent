@@ -1,4 +1,4 @@
-package com.karaew.learning.crimenalintent
+package com.karaew.learning.crimenalintent.fragments
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +10,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.karaew.learning.crimenalintent.R
+import com.karaew.learning.crimenalintent.database.Crime
 
 class CrimeFragment : Fragment() {
     private lateinit var crime: Crime

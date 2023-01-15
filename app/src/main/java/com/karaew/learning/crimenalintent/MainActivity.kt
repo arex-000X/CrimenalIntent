@@ -2,6 +2,7 @@ package com.karaew.learning.crimenalintent
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karaew.learning.crimenalintent.fragments.CrimeListFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
