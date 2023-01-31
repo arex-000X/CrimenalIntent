@@ -1,5 +1,6 @@
 package com.karaew.learning.crimenalintent.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,28 +14,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.karaew.learning.crimenalintent.CrimeAdapter
 import com.karaew.learning.crimenalintent.R
 import com.karaew.learning.crimenalintent.database.Crime
+import com.karaew.learning.crimenalintent.fragments.viewholder.Callbacks
 import com.karaew.learning.crimenalintent.fragments.viewmodel.CrimeListViewModel
 
+
 const val TAG = "CrimeListFragment"
-private var adapter: CrimeAdapter? = CrimeAdapter(emptyList())
+
 
 class CrimeListFragment : Fragment() {
+    private var callbacks:Callbacks? = null
+    private var adapter: CrimeAdapter? = CrimeAdapter(emptyList(),callbacks)
     lateinit var crimeRecylerView: RecyclerView
     val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProvider(this).get(CrimeListViewModel::class.java)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        crimeListViewModel.crimesListLiveData.observe(
-            viewLifecycleOwner,
-            Observer { crimes ->
-                crimes?.let {
-                    Log.i(TAG,"Got crimes ${crimes.size}")
-                    updateUI(crimes)
-                }
-            }
-        )
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
     }
 
     override fun onCreateView(
@@ -51,10 +49,32 @@ class CrimeListFragment : Fragment() {
         return view
     }
 
-    fun updateUI(crimes:List<Crime>) {
-        adapter = CrimeAdapter(crimes)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        crimeListViewModel.crimesListLiveData.observe(
+            viewLifecycleOwner,
+            Observer { crimes ->
+                crimes?.let {
+                    Log.i(TAG, "Got crimes ${crimes.size}")
+                    updateUI(crimes)
+                }
+            }
+        )
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    callbacks = null
+    }
+
+
+    fun updateUI(crimes: List<Crime>) {
+        adapter = CrimeAdapter(crimes,callbacks)
         crimeRecylerView.adapter = adapter
     }
+
+
+
 
     companion object {
         fun newInstance(): CrimeListFragment {
